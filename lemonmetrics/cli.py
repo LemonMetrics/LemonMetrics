@@ -14,7 +14,8 @@ import argparse
 import json
 import os
 import sys
-from typing import Any, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 from lemonmetrics import core, environment, fingerprint, lemonade
 from lemonmetrics.power import detect_sampler

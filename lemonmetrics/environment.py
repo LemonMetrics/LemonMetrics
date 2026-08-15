@@ -18,7 +18,7 @@ def _powershell(script: str) -> str:
 
 def _run(args: list[str]) -> str:
     try:
-        proc = subprocess.run(args, capture_output=True, text=True, timeout=10)
+        proc = subprocess.run(args, capture_output=True, text=True, timeout=10, check=False)
         return proc.stdout.strip()
     except (OSError, subprocess.TimeoutExpired):
         return ""

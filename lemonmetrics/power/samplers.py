@@ -328,6 +328,6 @@ def detect_sampler(interval: float = 1.0) -> PowerSampler:
         try:
             if cls.detect():
                 return cls(interval)
-        except Exception:
+        except (AttributeError, OSError, RuntimeError, TypeError, ValueError):
             continue
     return NullSampler(interval)

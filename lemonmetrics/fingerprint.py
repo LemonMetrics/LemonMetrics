@@ -14,7 +14,7 @@ from typing import Any
 
 def _run(args: list[str]) -> str:
     try:
-        proc = subprocess.run(args, capture_output=True, text=True, timeout=15)
+        proc = subprocess.run(args, capture_output=True, text=True, timeout=15, check=False)
         return proc.stdout.strip()
     except (OSError, subprocess.TimeoutExpired):
         return ""

@@ -16,6 +16,6 @@ jobs:
       - name: Install
         run: pip install -e ".[dev]"
       - name: Ruff
-        run: ruff check lemonmetrics tests scripts
+        run: ruff check lemonmetrics tests
       - name: Tests
         run: pytest

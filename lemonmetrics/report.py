@@ -25,8 +25,7 @@ def _sample_to_dict(sample: Any) -> dict[str, Any]:
 def write_power_jsonl(samples: list[Any], path: str) -> None:
     """Write power samples as newline-delimited JSON (``ts`` monotonic sec, ``watts``)."""
     with open(path, "w", encoding="utf-8") as fh:
-        for sample in samples:
-            fh.write(json.dumps(_sample_to_dict(sample)) + "\n")
+        fh.writelines(json.dumps(_sample_to_dict(sample)) + "\n" for sample in samples)
 
 
 def render_markdown(report: dict[str, Any]) -> str:
