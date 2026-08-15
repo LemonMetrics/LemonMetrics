@@ -36,7 +36,7 @@ def powermetrics_bin() -> str | None:
 def _current_user() -> str:
     try:
         return getpass.getuser()
-    except Exception:
+    except (KeyError, OSError, RuntimeError):
         return os.environ.get("USER") or "root"
 
 
@@ -51,6 +51,7 @@ def powermetrics_accessible() -> bool:
             capture_output=True,
             text=True,
             timeout=15,
+            check=False,
         )
     except (OSError, subprocess.TimeoutExpired):
         return False
@@ -89,8 +90,8 @@ def _run_gui() -> bool | None:
     None when the dialog could not be used at all (headless / no GUI session).
     """
     applescript = (
-        'do shell script "echo %s | base64 -d | /bin/sh" '
-        "with administrator privileges" % _encode(_setup_script())
+        f'do shell script "echo {_encode(_setup_script())} | base64 -d | /bin/sh" '
+        "with administrator privileges"
     )
     try:
         proc = subprocess.run(
@@ -98,6 +99,7 @@ def _run_gui() -> bool | None:
             capture_output=True,
             text=True,
             timeout=120,
+            check=False,
         )
     except (OSError, subprocess.TimeoutExpired):
         return None
@@ -122,6 +124,7 @@ def _run_tty() -> bool:
             input=_setup_script(),
             text=True,
             timeout=120,
+            check=False,
         )
     except (OSError, subprocess.TimeoutExpired):
         return False

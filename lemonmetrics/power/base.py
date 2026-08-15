@@ -108,7 +108,7 @@ class BackgroundSampler:
             start = time.monotonic()
             try:
                 watts = self.sampler.read()
-            except Exception:
+            except (AttributeError, OSError, RuntimeError, TypeError, ValueError):
                 watts = None
             if watts is not None and watts >= 0:
                 self.sampler.add(time.monotonic(), watts)

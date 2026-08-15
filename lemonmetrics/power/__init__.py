@@ -20,12 +20,12 @@ from lemonmetrics.power.samplers import (
 
 __all__ = [
     "BackgroundSampler",
-    "PowerSampler",
-    "Sample",
     "HwmonSampler",
     "NullSampler",
     "PowermetricsSampler",
+    "PowerSampler",
     "RaplSampler",
     "RocmSmiSampler",
+    "Sample",
     "detect_sampler",
 ]

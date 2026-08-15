@@ -134,7 +134,7 @@ def npu_list() -> list[str]:
         found += [
             line.split(": ", 1)[1]
             for line in out.splitlines()
-            if re.search(r"NPU|Neural|Accelerator|xdna|XDNA", line, re.I)
+            if re.search(r"NPU|Neural|Accelerator|xdna|XDNA", line, re.IGNORECASE)
         ]
     if os.path.isdir("/sys/class/amdxdna"):
         found.append("AMD XDNA NPU (amdxdna)")
