@@ -84,20 +84,23 @@ def physical_core_count() -> int:
 
 
 def memory_gb() -> float:
-    if platform.system() == "Darwin":
+    system = platform.system()
+    if system == "Darwin":
         out = _run(["sysctl", "-n", "hw.memsize"])
         if out.isdigit():
             return round(int(out) / (1024**3), 2)
-    if platform.system() == "Windows":
+    if system == "Windows":
         out = _powershell(
             "(Get-CimInstance Win32_ComputerSystem -ErrorAction SilentlyContinue).TotalPhysicalMemory"
         )
         if out.isdigit():
             return round(int(out) / (1024**3), 2)
-    total = _first_line("/proc/meminfo") or ""
-    if "MemTotal" in total:
-        kb = int(re.sub(r"\D", "", total))
-        return round(kb / (1024**2), 2)
+        return 0.0
+    if system == "Linux":
+        total = _first_line("/proc/meminfo") or ""
+        if "MemTotal" in total:
+            kb = int(re.sub(r"\D", "", total))
+            return round(kb / (1024**2), 2)
     return 0.0
 
 
