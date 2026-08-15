@@ -53,6 +53,7 @@ def docker_available() -> bool:
             capture_output=True,
             text=True,
             timeout=15,
+            check=False,
         )
     except (OSError, subprocess.TimeoutExpired):
         return False

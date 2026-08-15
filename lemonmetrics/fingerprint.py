@@ -108,7 +108,7 @@ def gpu_list() -> list[str]:
             return [
                 line.split(": ", 1)[1]
                 for line in out.splitlines()
-                if re.search(r"VGA|3D controller|Display controller", line, re.I)
+                if re.search(r"VGA|3D controller|Display controller", line, re.IGNORECASE)
             ]
         return []
     if platform.system() == "Darwin":

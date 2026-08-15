@@ -187,9 +187,7 @@ class RocmSmiSampler(PowerSampler):
     def detect(cls) -> bool:
         if platform.system() != "Linux":
             return False
-        if not shutil.which("rocm-smi"):
-            return False
-        return True
+        return bool(shutil.which("rocm-smi"))
 
     def read(self) -> float | None:
         try:
@@ -198,6 +196,7 @@ class RocmSmiSampler(PowerSampler):
                 capture_output=True,
                 text=True,
                 timeout=5,
+                check=False,
             )
         except (OSError, subprocess.TimeoutExpired):
             return None
@@ -291,6 +290,7 @@ class PowermetricsSampler(PowerSampler):
                 capture_output=True,
                 text=True,
                 timeout=self.interval + 10,
+                check=False,
             )
         except (OSError, subprocess.TimeoutExpired):
             return None
